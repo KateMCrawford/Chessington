@@ -24,13 +24,7 @@ namespace Chessington.GameEngine.Pieces
                 }
             }
 
-            return availableMoves.FindAll(IsOnBoard);
-        }
-
-        private bool IsOnBoard(Square testSquare)
-        {
-            return ((testSquare.Row > 0) && (testSquare.Row < GameSettings.BoardSize) &&
-                    (testSquare.Col > 0) && (testSquare.Col < GameSettings.BoardSize));
+            return availableMoves.FindAll((square) => square.IsValid());
         }
     }
 }
