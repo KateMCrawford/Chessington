@@ -29,11 +29,16 @@ namespace Chessington.GameEngine.Pieces
 
             int i = 1;
             Square nextMove = new Square(currentSquare.Row + i * rowDirection, currentSquare.Col + i * colDirection);
-            while (i < GameSettings.BoardSize && board.IsSquareEmpty(nextMove))
+            while (i < GameSettings.BoardSize && (board.IsSquareEmpty(nextMove)))
             {
                 moves.Add(nextMove);
                 i++;
                 nextMove = new Square(currentSquare.Row + i * rowDirection, currentSquare.Col + i * colDirection);
+            }
+
+            if (board.ContainsOpposingPiece(nextMove))
+            {
+                moves.Add(nextMove);
             }
 
             return moves;

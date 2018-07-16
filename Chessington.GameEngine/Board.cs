@@ -77,6 +77,18 @@ namespace Chessington.GameEngine
             }
         }
 
+        public bool ContainsOpposingPiece(Square square)
+        {
+            if (IsSquareEmpty(square) || !square.IsValid())
+            {
+                return false;
+            }
+            else
+            {
+                return GetPiece(square).Player != CurrentPlayer;
+            }
+        }
+
         public delegate void PieceCapturedEventHandler(Piece piece);
         
         public event PieceCapturedEventHandler PieceCaptured;
