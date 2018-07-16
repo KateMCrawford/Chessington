@@ -112,6 +112,25 @@ namespace Chessington.GameEngine
             return false;
         }
 
+        public bool CurrentPlayerHasWon()
+        {
+            for (int i = 0; i < GameSettings.BoardSize; i++)
+            {
+                for (int j = 0; j < GameSettings.BoardSize; j++)
+                {
+                    if (ContainsOpposingPiece(Square.At(i, j), CurrentPlayer))
+                    {
+                        if (GetPiece(Square.At(i, j)).GetAvailableMoves(this).Any())
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
         public bool IsSquareEmpty(Square testSquare)
         {
             if (testSquare.IsValid())
