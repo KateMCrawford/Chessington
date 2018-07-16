@@ -77,7 +77,7 @@ namespace Chessington.GameEngine
             }
         }
 
-        public bool ContainsOpposingPiece(Square square)
+        public bool ContainsOpposingPiece(Square square, Player currentPlayer)
         {
             if (IsSquareEmpty(square) || !square.IsValid())
             {
@@ -85,7 +85,7 @@ namespace Chessington.GameEngine
             }
             else
             {
-                return GetPiece(square).Player != CurrentPlayer;
+                return GetPiece(square).Player != currentPlayer;
             }
         }
 

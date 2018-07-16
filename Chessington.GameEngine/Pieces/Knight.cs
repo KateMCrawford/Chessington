@@ -22,7 +22,7 @@ namespace Chessington.GameEngine.Pieces
             availableMoves.Add(new Square(currentSquare.Row - 1, currentSquare.Col + 2));
             availableMoves.Add(new Square(currentSquare.Row - 1, currentSquare.Col - 2));
 
-            return availableMoves.FindAll((square) => board.IsSquareEmpty(square) || board.ContainsOpposingPiece(square));
+            return availableMoves.FindAll((square) => board.IsSquareEmpty(square) || board.ContainsOpposingPiece(square, Player));
         }
     }
 }

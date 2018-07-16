@@ -54,6 +54,18 @@ namespace Chessington.GameEngine.Pieces
                 }
             }
 
+            // diagonal
+            move = new Square(currentSquare.Row + 1 * direction, currentSquare.Col - 1);
+            if (board.ContainsOpposingPiece(move, Player))
+            {
+                moves.Add(move);
+            }
+            move = new Square(currentSquare.Row + 1 * direction, currentSquare.Col + 1);
+            if (board.ContainsOpposingPiece(move, Player))
+            {
+                moves.Add(move);
+            }
+
             return moves;
         }
     }

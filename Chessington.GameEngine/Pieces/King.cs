@@ -24,7 +24,7 @@ namespace Chessington.GameEngine.Pieces
                 }
             }
 
-            return availableMoves.FindAll((square) => board.IsSquareEmpty(square) || board.ContainsOpposingPiece(square));
+            return availableMoves.FindAll((square) => board.IsSquareEmpty(square) || board.ContainsOpposingPiece(square, Player));
         }
     }
 }

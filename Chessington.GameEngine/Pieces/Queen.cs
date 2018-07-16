@@ -40,7 +40,7 @@ namespace Chessington.GameEngine.Pieces
                 nextMove = new Square(currentSquare.Row + i * rowDirection, currentSquare.Col + i * colDirection);
             }
 
-            if (board.ContainsOpposingPiece(nextMove))
+            if (board.ContainsOpposingPiece(nextMove, Player))
             {
                 moves.Add(nextMove);
             }
