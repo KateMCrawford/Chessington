@@ -29,5 +29,20 @@ namespace Chessington.GameEngine.Tests
 
             location.Should().Be(square);
         }
+
+        [Test]
+        public void CheckCheckCheck()
+        {
+            var board = new Board();
+
+            var king = new King(Player.Black);
+            var rook = new Rook(Player.White);
+
+            board.AddPiece(Square.At(0, 0), king);
+            board.AddPiece(Square.At(4, 0), rook);
+
+            board.CheckCheck(Player.Black).Should().Be(true);
+
+        }
     }
 }

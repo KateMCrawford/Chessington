@@ -11,14 +11,14 @@ namespace Chessington.GameEngine
         public Player CurrentPlayer { get; private set; }
         public IList<Piece> CapturedPieces { get; private set; }
         public Square? EnPassantSquare = null;
-        private Square EnPassantPieceSquare = Square.At(0,0);
+        private Square EnPassantPieceSquare = Square.At(0, 0);
 
         public Board()
             : this(Player.White) { }
 
         public Board(Player currentPlayer, Piece[,] boardState = null)
         {
-            board = boardState ?? new Piece[GameSettings.BoardSize, GameSettings.BoardSize]; 
+            board = boardState ?? new Piece[GameSettings.BoardSize, GameSettings.BoardSize];
             CurrentPlayer = currentPlayer;
             CapturedPieces = new List<Piece>();
         }
@@ -27,12 +27,12 @@ namespace Chessington.GameEngine
         {
             board[square.Row, square.Col] = pawn;
         }
-    
+
         public Piece GetPiece(Square square)
         {
             return board[square.Row, square.Col];
         }
-        
+
         public Square FindPiece(Piece piece)
         {
             for (var row = 0; row < GameSettings.BoardSize; row++)
@@ -85,6 +85,28 @@ namespace Chessington.GameEngine
             OnCurrentPlayerChanged(CurrentPlayer);
         }
 
+        public bool CheckCheck(Player player)
+        {
+            for (int i = 0; i < GameSettings.BoardSize; i++)
+            {
+                for (int j = 0; j < GameSettings.BoardSize; j++)
+                {
+                    if (board[i, j] != null && board[i, j].Player != player)
+                    {
+                        foreach (var move in board[i, j].GetAvailableMoves(this))
+                        {
+                            if (board[move.Row, move.Col] is King)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public bool IsSquareEmpty(Square testSquare)
         {
             if (testSquare.IsValid())
@@ -110,7 +132,7 @@ namespace Chessington.GameEngine
         }
 
         public delegate void PieceCapturedEventHandler(Piece piece);
-        
+
         public event PieceCapturedEventHandler PieceCaptured;
 
         protected virtual void OnPieceCaptured(Piece piece)
