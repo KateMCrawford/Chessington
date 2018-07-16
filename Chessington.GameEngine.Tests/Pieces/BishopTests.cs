@@ -47,6 +47,21 @@ namespace Chessington.GameEngine.Tests.Pieces
         }
 
         [Test]
+        public void Bishop_CannnotPassThrough_OpposingPiecesIntoOpposingPieces()
+        {
+            var board = new Board();
+            var bishop = new Bishop(Player.White);
+            board.AddPiece(Square.At(4, 4), bishop);
+            var pawn = new Pawn(Player.Black);
+            var pieceToTake = new Pawn(Player.Black);
+            board.AddPiece(Square.At(6, 6), pieceToTake);
+            board.AddPiece(Square.At(7, 7), pawn);
+
+            var moves = bishop.GetAvailableMoves(board);
+            moves.Should().NotContain(Square.At(7, 7));
+        }
+
+        [Test]
         public void Bishop_CannnotPassThrough_FriendlyPieces()
         {
             var board = new Board();

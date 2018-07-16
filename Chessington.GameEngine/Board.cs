@@ -85,17 +85,22 @@ namespace Chessington.GameEngine
             OnCurrentPlayerChanged(CurrentPlayer);
         }
 
-        public bool CheckCheck(Player player)
+        public bool CheckCheck(Player player, Square from, Square to)
         {
+            Piece[,] newBoard = (Piece[,]) board.Clone();
+
+            Board workingBoard = new Board(CurrentPlayer, newBoard);
+            workingBoard.MovePiece(from, to);
+
             for (int i = 0; i < GameSettings.BoardSize; i++)
             {
                 for (int j = 0; j < GameSettings.BoardSize; j++)
                 {
-                    if (board[i, j] != null && board[i, j].Player != player)
+                    if (workingBoard.ContainsOpposingPiece(Square.At(i, j), player))
                     {
-                        foreach (var move in board[i, j].GetAvailableMoves(this))
+                        foreach (var move in workingBoard.GetPiece(Square.At(i, j)).GetAvailableMovesPreCheck(workingBoard))
                         {
-                            if (board[move.Row, move.Col] is King)
+                            if (workingBoard.GetPiece(move) is King)
                             {
                                 return true;
                             }

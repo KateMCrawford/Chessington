@@ -31,17 +31,19 @@ namespace Chessington.GameEngine.Tests
         }
 
         [Test]
-        public void CheckCheckCheck()
+        public void CanBlockCheck()
         {
             var board = new Board();
 
             var king = new King(Player.Black);
-            var rook = new Rook(Player.White);
+            var bishop = new Bishop(Player.White);
+            var queen = new Queen(Player.Black);
 
-            board.AddPiece(Square.At(0, 0), king);
-            board.AddPiece(Square.At(4, 0), rook);
+            board.AddPiece(Square.At(0, 2), king);
+            board.AddPiece(Square.At(2, 0), bishop);
+            board.AddPiece(Square.At(0, 1), queen);
 
-            board.CheckCheck(Player.Black).Should().Be(true);
+            queen.GetAvailableMoves(board).Should().Contain(Square.At(1, 1));
 
         }
     }

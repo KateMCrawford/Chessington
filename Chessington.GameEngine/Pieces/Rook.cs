@@ -8,7 +8,7 @@ namespace Chessington.GameEngine.Pieces
         public Rook(Player player)
             : base(player) { }
 
-        public override IEnumerable<Square> GetAvailableMoves(Board board)
+        public override List<Square> GetAvailableMovesPreCheck(Board board)
         {
             var currentSquare = board.FindPiece(this);
             var availableMoves = new List<Square>();

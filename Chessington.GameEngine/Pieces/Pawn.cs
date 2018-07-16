@@ -11,7 +11,7 @@ namespace Chessington.GameEngine.Pieces
 
         private bool hasMoved = false;
 
-        public override IEnumerable<Square> GetAvailableMoves(Board board)
+        public override List<Square> GetAvailableMovesPreCheck(Board board)
         {
             var currentSquare = board.FindPiece(this);
             var availableMoves = new List<Square>();
@@ -29,6 +29,7 @@ namespace Chessington.GameEngine.Pieces
 
             return availableMoves;
         }
+
 
         public override void MoveTo(Board board, Square newSquare)
         {
