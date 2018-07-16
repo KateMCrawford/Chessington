@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Chessington.GameEngine.Pieces
@@ -17,19 +18,13 @@ namespace Chessington.GameEngine.Pieces
 
             if (Player == Player.White)
             {
-                availableMoves.Add(new Square(currentSquare.Row - 1, currentSquare.Col));
-                if (!hasMoved)
-                {
-                    availableMoves.Add(new Square(currentSquare.Row - 2, currentSquare.Col));
-                }
+                var moves = GetMoves(currentSquare, board, -1);
+                availableMoves = availableMoves.Concat(moves).ToList();
             }
             else
             {
-                availableMoves.Add(new Square(currentSquare.Row + 1, currentSquare.Col));
-                if (!hasMoved)
-                {
-                    availableMoves.Add(new Square(currentSquare.Row + 2, currentSquare.Col));
-                }
+                var moves = GetMoves(currentSquare, board, 1);
+                availableMoves = availableMoves.Concat(moves).ToList();
             }
 
             return availableMoves;
@@ -39,6 +34,32 @@ namespace Chessington.GameEngine.Pieces
         {
             base.MoveTo(board, newSquare);
             hasMoved = true;
+        }
+
+        private IEnumerable<Square> GetMoves(Square currentSquare, Board board, int direction)
+        {
+            var moves = new List<Square>();
+
+            // one square
+            Square move = new Square(currentSquare.Row + 1*direction, currentSquare.Col);
+            if (isEmpty(move, board))
+            {
+                moves.Add(move);
+                
+                // two squares
+                move = new Square(currentSquare.Row + 2 * direction, currentSquare.Col);
+                if (!hasMoved && isEmpty(move, board))
+                {
+                    moves.Add(move);
+                }
+            }
+
+            return moves;
+        }
+
+        private bool isEmpty(Square testSquare, Board board)
+        {
+            return board.GetPiece(testSquare) == null;
         }
     }
 }
