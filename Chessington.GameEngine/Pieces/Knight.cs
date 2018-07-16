@@ -22,13 +22,7 @@ namespace Chessington.GameEngine.Pieces
             availableMoves.Add(new Square(currentSquare.Row - 1, currentSquare.Col + 2));
             availableMoves.Add(new Square(currentSquare.Row - 1, currentSquare.Col - 2));
 
-            return availableMoves.FindAll(IsOnBoard);
-        }
-
-        private bool IsOnBoard(Square testSquare)
-        {
-            return ((testSquare.Row > 0) && (testSquare.Row < GameSettings.BoardSize) &&
-                    (testSquare.Col > 0) && (testSquare.Col < GameSettings.BoardSize));
+            return availableMoves.FindAll((square) => square.IsValid());
         }
     }
 }

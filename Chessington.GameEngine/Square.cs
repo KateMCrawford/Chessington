@@ -10,6 +10,12 @@
             Row = row;
             Col = col;
         }
+        
+        public bool IsValid()
+        {
+            return ((Row >= 0) && (Row < GameSettings.BoardSize) &&
+                    (Col >= 0) && (Col < GameSettings.BoardSize));
+        }
 
         public static Square At(int row, int col)
         {

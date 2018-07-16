@@ -42,24 +42,19 @@ namespace Chessington.GameEngine.Pieces
 
             // one square
             Square move = new Square(currentSquare.Row + 1*direction, currentSquare.Col);
-            if (isEmpty(move, board))
+            if (board.IsSquareEmpty(move))
             {
                 moves.Add(move);
                 
                 // two squares
                 move = new Square(currentSquare.Row + 2 * direction, currentSquare.Col);
-                if (!hasMoved && isEmpty(move, board))
+                if (!hasMoved && board.IsSquareEmpty(move))
                 {
                     moves.Add(move);
                 }
             }
 
             return moves;
-        }
-
-        private bool isEmpty(Square testSquare, Board board)
-        {
-            return board.GetPiece(testSquare) == null;
         }
     }
 }
