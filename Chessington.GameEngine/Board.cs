@@ -9,7 +9,9 @@ namespace Chessington.GameEngine
     {
         private readonly Piece[,] board;
         public Player CurrentPlayer { get; private set; }
-        public IList<Piece> CapturedPieces { get; private set; } 
+        public IList<Piece> CapturedPieces { get; private set; }
+        public Square? EnPassantSquare = null;
+        private Square EnPassantPieceSquare = Square.At(0,0);
 
         public Board()
             : this(Player.White) { }
@@ -57,9 +59,27 @@ namespace Chessington.GameEngine
                 OnPieceCaptured(board[to.Row, to.Col]);
             }
 
+            //en passant capture
+            if (movingPiece is Pawn && to == EnPassantSquare)
+            {
+                OnPieceCaptured(board[EnPassantPieceSquare.Row, EnPassantPieceSquare.Col]);
+                board[EnPassantPieceSquare.Row, EnPassantPieceSquare.Col] = null;
+            }
+
             //Move the piece and set the 'from' square to be empty.
             board[to.Row, to.Col] = board[from.Row, from.Col];
             board[from.Row, from.Col] = null;
+
+            // can be en passanted
+            if (movingPiece is Pawn && Math.Abs(from.Row - to.Row) == 2)
+            {
+                EnPassantSquare = Square.At(Math.Abs(from.Row + to.Row) / 2, to.Col);
+                EnPassantPieceSquare = to;
+            }
+            else
+            {
+                EnPassantSquare = null;
+            }
 
             CurrentPlayer = movingPiece.Player == Player.White ? Player.Black : Player.White;
             OnCurrentPlayerChanged(CurrentPlayer);

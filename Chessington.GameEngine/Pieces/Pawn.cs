@@ -56,12 +56,12 @@ namespace Chessington.GameEngine.Pieces
 
             // diagonal
             move = new Square(currentSquare.Row + 1 * direction, currentSquare.Col - 1);
-            if (board.ContainsOpposingPiece(move, Player))
+            if (board.ContainsOpposingPiece(move, Player) || board.EnPassantSquare == move)
             {
                 moves.Add(move);
             }
             move = new Square(currentSquare.Row + 1 * direction, currentSquare.Col + 1);
-            if (board.ContainsOpposingPiece(move, Player))
+            if (board.ContainsOpposingPiece(move, Player) || board.EnPassantSquare == move)
             {
                 moves.Add(move);
             }

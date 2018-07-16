@@ -201,5 +201,49 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().NotContain(Square.At(6, 2));
             moves.Should().NotContain(Square.At(6, 4));
         }
+
+        [Test]
+        public void WhitePawns_CanCaptureEnPassant()
+        {
+            var board = new Board();
+            var whitePawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(5, 5), whitePawn);
+
+            board.MovePiece(Square.At(5, 5), Square.At(4, 5));
+
+
+            var blackPawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(2, 6), blackPawn);
+
+            board.MovePiece(Square.At(2, 6), Square.At(4, 6));
+
+            var moves = whitePawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().Contain(Square.At(3, 6));
+            
+            board.MovePiece(Square.At(4, 5), Square.At(3, 6));
+            board.GetPiece(Square.At(4, 6)).Should().BeNull();
+        }
+
+        [Test]
+        public void BlackPawns_CanCaptureEnPassant()
+        {
+            var board = new Board();
+            var blackPawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(4, 3), blackPawn);
+
+            var whitePawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(6, 2), whitePawn);
+
+            board.MovePiece(Square.At(6, 2), Square.At(4, 2));
+
+            var moves = blackPawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().Contain(Square.At(5, 2));
+
+            board.MovePiece(Square.At(4, 3), Square.At(5, 2));
+            board.GetPiece(Square.At(4, 2)).Should().BeNull();
+        }
+        
     }
 }
