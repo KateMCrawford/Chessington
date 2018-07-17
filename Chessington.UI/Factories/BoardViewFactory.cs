@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -35,10 +36,16 @@ namespace Chessington.UI.Factories
                     CreateSquare(row, col, grid);
         }
 
+
+        private static Random rnd = new Random();
         private static void CreateSquare(int row, int col, Panel grid)
         {
-            var squareColor = (row + col) % 2 == 0 ? Colors.Red : Colors.Fuchsia;
-            var square = new Canvas { Width = InterfaceSettings.SquareSize, Height = InterfaceSettings.SquareSize, Background = new SolidColorBrush(squareColor) };
+            Byte[] b = new Byte[3];
+            rnd.NextBytes(b);
+            var squareColor = new Color();
+            squareColor = Color.FromRgb(b[0], b[1], b[2]);
+            var brush = new SolidColorBrush(squareColor);
+            var square = new Canvas { Width = InterfaceSettings.SquareSize, Height = InterfaceSettings.SquareSize, Background = brush };
 
             grid.Children.Add(square);
             Grid.SetRow(square, row);
