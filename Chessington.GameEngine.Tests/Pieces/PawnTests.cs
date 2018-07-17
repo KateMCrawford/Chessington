@@ -245,12 +245,19 @@ namespace Chessington.GameEngine.Tests.Pieces
             board.GetPiece(Square.At(4, 2)).Should().BeNull();
         }
 
-    //    [Test]
-    //    public void Pawns_CanBePromoted
-    //    {
-    //        var board = new Board();
-            
-    //}
+        [Test]
+        public void Pawns_CanBePromoted()
+        {
+            var board = new Board();
+
+            var pawn = new Pawn(Player.White);
+
+            board.AddPiece(Square.At(1, 0), pawn);
+
+            board.MovePiece(Square.At(1, 0), Square.At(0, 0));
+
+            (board.GetPiece(Square.At(0, 0)) is Queen).Should().Be(true);
+        }
         
     }
 }

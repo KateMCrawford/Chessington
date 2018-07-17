@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Chessington.GameEngine.Pieces;
 using System.Windows;
+using static Chessington.GameEngine.CastlingHelper;
 
 namespace Chessington.GameEngine
 {
@@ -54,6 +55,14 @@ namespace Chessington.GameEngine
                 throw new ArgumentException("The supplied piece does not belong to the current player.");
             }
 
+            //castling moves
+            if (movingPiece is King && IsKingCastleMove(from, to))
+            {
+                var fromTo = GetCastlingMoveRook(this, from, to);
+                board[fromTo[1].Row, fromTo[1].Col] = board[fromTo[0].Row, fromTo[0].Col];
+                board[fromTo[0].Row, fromTo[0].Col] = null;
+            }
+
             //If the space we're moving to is occupied, we need to mark it as captured.
             if (board[to.Row, to.Col] != null)
             {
@@ -82,14 +91,19 @@ namespace Chessington.GameEngine
                 EnPassantSquare = null;
             }
 
-           
+            // pawn promotion
+            if (movingPiece is Pawn && (to.Row == 0 || to.Row == GameSettings.BoardSize))
+            {
+                board[to.Row, to.Col] = new Queen(movingPiece.Player);
+            }
+
             CurrentPlayer = movingPiece.Player == Player.White ? Player.Black : Player.White;
             OnCurrentPlayerChanged(CurrentPlayer);
         }
 
         public bool MovePutsPlayerInCheck(Player player, Square from, Square to)
         {
-            Piece[,] newBoard = (Piece[,]) board.Clone();
+            Piece[,] newBoard = (Piece[,])board.Clone();
 
             Board workingBoard = new Board(player, newBoard);
             workingBoard.MovePiece(from, to);

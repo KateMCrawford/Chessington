@@ -9,8 +9,6 @@ namespace Chessington.GameEngine.Pieces
         public Pawn(Player player) 
             : base(player) { }
 
-        private bool hasMoved = false;
-
         public override List<Square> GetAvailableMovesPreCheck(Board board)
         {
             var currentSquare = board.FindPiece(this);
@@ -28,13 +26,6 @@ namespace Chessington.GameEngine.Pieces
             }
 
             return availableMoves;
-        }
-
-
-        public override void MoveTo(Board board, Square newSquare)
-        {
-            base.MoveTo(board, newSquare);
-            hasMoved = true;
         }
 
         private IEnumerable<Square> GetMoves(Square currentSquare, Board board, int direction)

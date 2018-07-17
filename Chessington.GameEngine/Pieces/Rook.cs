@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using static Chessington.GameEngine.CastlingHelper;
 
 namespace Chessington.GameEngine.Pieces
 {
@@ -12,7 +13,7 @@ namespace Chessington.GameEngine.Pieces
         {
             var currentSquare = board.FindPiece(this);
             var availableMoves = new List<Square>();
-            
+
             availableMoves = availableMoves
                 .Concat(GetMoves(currentSquare, board, 0, 1))
                 .Concat(GetMoves(currentSquare, board, 0, -1))

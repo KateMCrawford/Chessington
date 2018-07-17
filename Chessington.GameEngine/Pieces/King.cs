@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using static Chessington.GameEngine.CastlingHelper;
 
 namespace Chessington.GameEngine.Pieces
 {
@@ -25,6 +26,8 @@ namespace Chessington.GameEngine.Pieces
             }
 
             return availableMoves
+                .Concat(GetKingCastleMoves(board, this))
+                .ToList()
                 .FindAll((square) => board.IsSquareEmpty(square) || board.ContainsOpposingPiece(square, Player));
         }
     }
