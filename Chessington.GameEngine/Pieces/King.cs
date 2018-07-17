@@ -9,6 +9,16 @@ namespace Chessington.GameEngine.Pieces
         public King(Player player)
             : base(player) { }
 
+
+        public override IEnumerable<Square> GetAvailableMoves(Board board)
+        {
+            var currentSquare = board.FindPiece(this);
+            return GetAvailableMovesPreCheck(board)
+                .Concat(GetKingCastleMoves(board, this))
+                .ToList()
+                .FindAll((move) => !board.MovePutsPlayerInCheck(Player, currentSquare, move));
+        }
+
         public override List<Square> GetAvailableMovesPreCheck(Board board)
         {
             var currentSquare = board.FindPiece(this);
@@ -26,8 +36,6 @@ namespace Chessington.GameEngine.Pieces
             }
 
             return availableMoves
-                .Concat(GetKingCastleMoves(board, this))
-                .ToList()
                 .FindAll((square) => board.IsSquareEmpty(square) || board.ContainsOpposingPiece(square, Player));
         }
     }

@@ -16,7 +16,7 @@ namespace Chessington.GameEngine.Pieces
 
         public Player Player { get; private set; }
 
-        public IEnumerable<Square> GetAvailableMoves(Board board)
+        public virtual IEnumerable<Square> GetAvailableMoves(Board board)
         {
             var currentSquare = board.FindPiece(this);
             return GetAvailableMovesPreCheck(board)

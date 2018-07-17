@@ -7,7 +7,7 @@ namespace Chessington.UI
     /// </summary>
     public static class InterfaceSettings
     {
-        public const int SquareSize = 50;
+        public const int SquareSize = 100;
         public const string IconRoot = "pack://application:,,,/Icons/";
 
         public static readonly Color SelectedSquareColor = Colors.BlueViolet;
