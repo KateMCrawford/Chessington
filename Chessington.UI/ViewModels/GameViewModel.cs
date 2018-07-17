@@ -12,7 +12,8 @@ using Chessington.UI.Properties;
 
 namespace Chessington.UI.ViewModels
 {
-    public class GameViewModel : INotifyPropertyChanged, IHandle<PieceTaken>, IHandle<CurrentPlayerChanged>, IHandle<PiecesMoved>, IHandle<PlayerHasWon>
+    public class GameViewModel : INotifyPropertyChanged, IHandle<PieceTaken>,
+        IHandle<CurrentPlayerChanged>, IHandle<PiecesMoved>, IHandle<PlayerHasWon>, IHandle<Stalemate>
     {
         private string currentPlayer;
 
@@ -48,16 +49,28 @@ namespace Chessington.UI.ViewModels
 
         public void Handle(PiecesMoved message)
         {
-            Player player = message.Board.CurrentPlayer.opposingPlayer();
-            if (message.Board.PlayerHasWon(player))
+            Player player = message.Board.CurrentPlayer;
+            Player otherPlayer = player.opposingPlayer();
+            if (message.Board.PlayerHasNoMoves(otherPlayer))
             {
-                ChessingtonServices.EventAggregator.Publish(new PlayerHasWon(player));
+                if (message.Board.PlayerIsInCheck(otherPlayer))
+                {
+                    ChessingtonServices.EventAggregator.Publish(new PlayerHasWon(player));
+                }
+                else
+                {
+                    ChessingtonServices.EventAggregator.Publish(new Stalemate());
+                }
             }
         }
 
         public void Handle(PlayerHasWon message)
         {
             MessageBox.Show(message.Player + " has won!");
+        }
+        public void Handle(Stalemate message)
+        {
+            MessageBox.Show("Stalemate!");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

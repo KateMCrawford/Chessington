@@ -62,5 +62,22 @@ namespace Chessington.GameEngine.Tests
 
             board.PlayerHasWon(board.CurrentPlayer).Should().Be(true);
         }
+
+        [Test]
+        public void StalemateIsRecognised()
+        {
+            var board = new Board(Player.Black);
+
+            var whiteKing = new King(Player.White);
+            var whiteQueen = new Queen(Player.White);
+            var blackKing = new King(Player.Black);
+
+            board.AddPiece(Square.At(0, 7), blackKing);
+            board.AddPiece(Square.At(1, 5), whiteKing);
+            board.AddPiece(Square.At(2, 6), whiteQueen);
+
+            board.PlayerHasNoMoves(Player.Black).Should().Be(true);
+            board.PlayerIsInCheck(Player.Black).Should().Be(false);
+        }
     }
 }
