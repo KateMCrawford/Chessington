@@ -37,7 +37,7 @@ namespace Chessington.UI.Factories
 
         private static void CreateSquare(int row, int col, Panel grid)
         {
-            var squareColor = (row + col) % 2 == 0 ? Colors.White : Colors.Black;
+            var squareColor = (row + col) % 2 == 0 ? Colors.Red : Colors.Fuchsia;
             var square = new Canvas { Width = InterfaceSettings.SquareSize, Height = InterfaceSettings.SquareSize, Background = new SolidColorBrush(squareColor) };
 
             grid.Children.Add(square);

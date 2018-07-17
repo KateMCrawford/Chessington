@@ -8,7 +8,7 @@
             </StackPanel>
         </Border>
         <StackPanel Orientation="Vertical">
-            <TextBlock Text="{Binding CurrentPlayer}" FontWeight="Bold" FontSize="14" />
+            <TextBlock FontFamily="Comic Sans MS" Text="{Binding CurrentPlayer}" FontWeight="Bold" FontSize="30" />
         <ListView ItemsSource="{Binding CapturedPieces}">
             <ListView.ItemTemplate>
                 <DataTemplate>
