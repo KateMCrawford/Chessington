@@ -87,22 +87,27 @@ namespace Chessington.GameEngine
             OnCurrentPlayerChanged(CurrentPlayer);
         }
 
-        public bool CheckIfCurrentPlayerIsInCheck(Player player, Square from, Square to)
+        public bool MovePutsPlayerInCheck(Player player, Square from, Square to)
         {
             Piece[,] newBoard = (Piece[,]) board.Clone();
 
-            Board workingBoard = new Board(CurrentPlayer, newBoard);
+            Board workingBoard = new Board(player, newBoard);
             workingBoard.MovePiece(from, to);
 
+            return workingBoard.PlayerIsInCheck(player);
+        }
+
+        public bool PlayerIsInCheck(Player player)
+        {
             for (int i = 0; i < GameSettings.BoardSize; i++)
             {
                 for (int j = 0; j < GameSettings.BoardSize; j++)
                 {
-                    if (workingBoard.ContainsOpposingPiece(Square.At(i, j), player))
+                    if (ContainsOpposingPiece(Square.At(i, j), player))
                     {
-                        foreach (var move in workingBoard.GetPiece(Square.At(i, j)).GetAvailableMovesPreCheck(workingBoard))
+                        foreach (var move in GetPiece(Square.At(i, j)).GetAvailableMovesPreCheck(this))
                         {
-                            if (workingBoard.GetPiece(move) is King)
+                            if (GetPiece(move) is King)
                             {
                                 return true;
                             }
@@ -114,13 +119,13 @@ namespace Chessington.GameEngine
             return false;
         }
 
-        public bool PlayerHasWon(Player player)
+        public bool PlayerHasNoMoves(Player player)
         {
             for (int i = 0; i < GameSettings.BoardSize; i++)
             {
                 for (int j = 0; j < GameSettings.BoardSize; j++)
                 {
-                    if (ContainsOpposingPiece(Square.At(i, j), player))
+                    if (ContainsOpposingPiece(Square.At(i, j), player.opposingPlayer()))
                     {
                         if (GetPiece(Square.At(i, j)).GetAvailableMoves(this).Any())
                         {
@@ -131,6 +136,11 @@ namespace Chessington.GameEngine
             }
 
             return true;
+        }
+
+        public bool PlayerHasWon(Player player)
+        {
+            return PlayerHasNoMoves(player.opposingPlayer()) && PlayerIsInCheck(player.opposingPlayer());
         }
 
         public bool IsSquareEmpty(Square testSquare)

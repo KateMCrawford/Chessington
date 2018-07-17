@@ -60,7 +60,7 @@ namespace Chessington.GameEngine.Tests
             board.AddPiece(Square.At(3, 0), queen1);
             board.AddPiece(Square.At(3, 1), queen2);
 
-            board.CurrentPlayerHasWon().Should().Be(true);
+            board.PlayerHasWon(board.CurrentPlayer).Should().Be(true);
         }
     }
 }
