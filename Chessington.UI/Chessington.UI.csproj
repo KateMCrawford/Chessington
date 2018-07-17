@@ -126,12 +126,14 @@
     <Resource Include="Icons\White B.ico" />
     <Resource Include="Icons\White K.ico" />
     <Resource Include="Icons\White N.ico" />
-    <Resource Include="Icons\White P.ico" />
     <Resource Include="Icons\White Q.ico" />
     <Resource Include="Icons\White R.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Black P.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\White P.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
