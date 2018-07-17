@@ -244,6 +244,13 @@ namespace Chessington.GameEngine.Tests.Pieces
             board.MovePiece(Square.At(4, 3), Square.At(5, 2));
             board.GetPiece(Square.At(4, 2)).Should().BeNull();
         }
+
+    //    [Test]
+    //    public void Pawns_CanBePromoted
+    //    {
+    //        var board = new Board();
+            
+    //}
         
     }
 }

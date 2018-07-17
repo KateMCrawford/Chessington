@@ -50,6 +50,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Factories\StartingPositionFactory.cs" />
+    <Compile Include="Notifications\PlayerHasWon.cs" />
     <Compile Include="Notifications\CurrentPlayerChanged.cs" />
     <Compile Include="Notifications\PieceTaken.cs" />
     <Compile Include="Notifications\SelectionCleared.cs" />

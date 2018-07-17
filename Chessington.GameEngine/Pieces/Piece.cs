@@ -17,7 +17,7 @@ namespace Chessington.GameEngine.Pieces
         {
             var currentSquare = board.FindPiece(this);
             return GetAvailableMovesPreCheck(board)
-                .FindAll((move) => !board.CheckCheck(Player, currentSquare, move));
+                .FindAll((move) => !board.CheckIfCurrentPlayerIsInCheck(Player, currentSquare, move));
         }
 
         public abstract List<Square> GetAvailableMovesPreCheck(Board board);

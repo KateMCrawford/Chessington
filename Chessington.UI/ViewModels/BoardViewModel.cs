@@ -25,7 +25,6 @@ namespace Chessington.UI.ViewModels
 
         public void PiecesMoved()
         {
-            //PUT CHECKMATE HERE
             ChessingtonServices.EventAggregator.Publish(new PiecesMoved(Board));
         }
 

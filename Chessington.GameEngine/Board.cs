@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Chessington.GameEngine.Pieces;
+using System.Windows;
 
 namespace Chessington.GameEngine
 {
@@ -81,11 +82,12 @@ namespace Chessington.GameEngine
                 EnPassantSquare = null;
             }
 
+           
             CurrentPlayer = movingPiece.Player == Player.White ? Player.Black : Player.White;
             OnCurrentPlayerChanged(CurrentPlayer);
         }
 
-        public bool CheckCheck(Player player, Square from, Square to)
+        public bool CheckIfCurrentPlayerIsInCheck(Player player, Square from, Square to)
         {
             Piece[,] newBoard = (Piece[,]) board.Clone();
 
@@ -112,13 +114,13 @@ namespace Chessington.GameEngine
             return false;
         }
 
-        public bool CurrentPlayerHasWon()
+        public bool PlayerHasWon(Player player)
         {
             for (int i = 0; i < GameSettings.BoardSize; i++)
             {
                 for (int j = 0; j < GameSettings.BoardSize; j++)
                 {
-                    if (ContainsOpposingPiece(Square.At(i, j), CurrentPlayer))
+                    if (ContainsOpposingPiece(Square.At(i, j), player))
                     {
                         if (GetPiece(Square.At(i, j)).GetAvailableMoves(this).Any())
                         {

@@ -46,5 +46,21 @@ namespace Chessington.GameEngine.Tests
             queen.GetAvailableMoves(board).Should().Contain(Square.At(1, 1));
 
         }
+
+        [Test]
+        public void CheckmateIsRecognised()
+        {
+            var board = new Board();
+
+            var king = new King(Player.Black);
+            var queen1 = new Queen(Player.White);
+            var queen2 = new Queen(Player.White);
+
+            board.AddPiece(Square.At(0, 0), king);
+            board.AddPiece(Square.At(3, 0), queen1);
+            board.AddPiece(Square.At(3, 1), queen2);
+
+            board.CurrentPlayerHasWon().Should().Be(true);
+        }
     }
 }

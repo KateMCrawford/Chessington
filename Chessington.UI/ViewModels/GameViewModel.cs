@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using Chessington.GameEngine;
 using Chessington.UI.Caliburn.Micro;
@@ -11,7 +12,7 @@ using Chessington.UI.Properties;
 
 namespace Chessington.UI.ViewModels
 {
-    public class GameViewModel : INotifyPropertyChanged, IHandle<PieceTaken>, IHandle<CurrentPlayerChanged>
+    public class GameViewModel : INotifyPropertyChanged, IHandle<PieceTaken>, IHandle<CurrentPlayerChanged>, IHandle<PiecesMoved>, IHandle<PlayerHasWon>
     {
         private string currentPlayer;
 
@@ -43,6 +44,20 @@ namespace Chessington.UI.ViewModels
         public void Handle(CurrentPlayerChanged message)
         {
             CurrentPlayer = Enum.GetName(typeof(Player), message.Player);
+        }
+
+        public void Handle(PiecesMoved message)
+        {
+            Player player = message.Board.CurrentPlayer.opposingPlayer();
+            if (message.Board.PlayerHasWon(player))
+            {
+                ChessingtonServices.EventAggregator.Publish(new PlayerHasWon(player));
+            }
+        }
+
+        public void Handle(PlayerHasWon message)
+        {
+            MessageBox.Show(message.Player + " has won!");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
