@@ -37,15 +37,10 @@ namespace Chessington.UI.Factories
         }
 
 
-        private static Random rnd = new Random();
         private static void CreateSquare(int row, int col, Panel grid)
         {
-            Byte[] b = new Byte[3];
-            rnd.NextBytes(b);
-            var squareColor = new Color();
-            squareColor = Color.FromRgb(b[0], b[1], b[2]);
-            var brush = new SolidColorBrush(squareColor);
-            var square = new Canvas { Width = InterfaceSettings.SquareSize, Height = InterfaceSettings.SquareSize, Background = brush };
+            var square = new Canvas { Width = InterfaceSettings.SquareSize, Height = InterfaceSettings.SquareSize};
+            BindingOperations.SetBinding(square, Canvas.BackgroundProperty, new Binding("Self") { Converter = new SquareToBackgroundBrushConverter() });
 
             grid.Children.Add(square);
             Grid.SetRow(square, row);
@@ -61,7 +56,7 @@ namespace Chessington.UI.Factories
             var pieceBorder = new Border { BorderThickness = new Thickness(2) };
             BindingOperations.SetBinding(pieceBorder, Border.BorderBrushProperty, new Binding("Self") { Converter = new SquareToBorderBrushConverter() });
             pieceBorder.Child = pieceImage;
-            
+
             square.MouseDown += SquareOnMouseDown;
             
             square.Children.Add(pieceBorder);
