@@ -92,7 +92,7 @@ namespace Chessington.GameEngine
             }
 
             // pawn promotion
-            if (movingPiece is Pawn && (to.Row == 0 || to.Row == GameSettings.BoardSize))
+            if (movingPiece is Pawn && (to.Row == 0 || to.Row == GameSettings.BoardSize - 1))
             {
                 board[to.Row, to.Col] = new Queen(movingPiece.Player);
             }

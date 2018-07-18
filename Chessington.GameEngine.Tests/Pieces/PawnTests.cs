@@ -249,15 +249,53 @@ namespace Chessington.GameEngine.Tests.Pieces
         public void Pawns_CanBePromoted()
         {
             var board = new Board();
-
             var pawn = new Pawn(Player.White);
 
             board.AddPiece(Square.At(1, 0), pawn);
-
             board.MovePiece(Square.At(1, 0), Square.At(0, 0));
-
             (board.GetPiece(Square.At(0, 0)) is Queen).Should().Be(true);
         }
-        
+        [Test]
+        public void BlackPawns_CanBePromoted()
+        {
+            var board = new Board(Player.Black);
+            var pawn = new Pawn(Player.Black);
+
+            board.AddPiece(Square.At(6, 0), pawn);
+            board.MovePiece(Square.At(6, 0), Square.At(7, 0));
+            (board.GetPiece(Square.At(7, 0)) is Queen).Should().Be(true);
+        }
+
+        [Test]
+        public void Pawns_CanBePromotedWhileCapturing()
+        {
+            var board = new Board();
+
+            var pawn = new Pawn(Player.White);
+            var pawn2 = new Pawn(Player.Black);
+
+            board.AddPiece(Square.At(1, 0), pawn);
+            board.AddPiece(Square.At(0, 1), pawn2);
+
+            board.MovePiece(Square.At(1, 0), Square.At(0, 1));
+
+            (board.GetPiece(Square.At(0, 1)) is Queen).Should().Be(true);
+        }
+        [Test]
+        public void BlackPawns_CanBePromotedWhileCapturing()
+        {
+            var board = new Board(Player.Black);
+
+            var pawn = new Pawn(Player.Black);
+            var pawn2 = new Pawn(Player.White);
+
+            board.AddPiece(Square.At(6, 0), pawn);
+            board.AddPiece(Square.At(7, 1), pawn2);
+
+            board.MovePiece(Square.At(6, 0), Square.At(7, 1));
+
+            (board.GetPiece(Square.At(7, 1)) is Queen).Should().Be(true);
+        }
+
     }
 }
