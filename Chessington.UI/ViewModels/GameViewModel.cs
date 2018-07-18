@@ -48,11 +48,11 @@ namespace Chessington.UI.ViewModels
 
             Player player = message.Board.CurrentPlayer;
             Player otherPlayer = player.opposingPlayer();
-            if (message.Board.PlayerHasNoMoves(otherPlayer))
+            if (message.Board.PlayerHasNoMoves(player))
             {
-                if (message.Board.PlayerIsInCheck(otherPlayer))
+                if (message.Board.PlayerIsInCheck(player))
                 {
-                    ChessingtonServices.EventAggregator.Publish(new PlayerHasWon(player));
+                    ChessingtonServices.EventAggregator.Publish(new PlayerHasWon(otherPlayer));
                 }
                 else
                 {
