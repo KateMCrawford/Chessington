@@ -182,16 +182,5 @@ namespace Chessington.GameEngine.Tests
 
             whiteKing.GetAvailableMoves(board).Should().NotContain(Square.At(7, 6));
         }
-
-        [Test]
-        public void GetRandomPieceTest()
-        {
-            var board = new Board();
-
-            board.AddPiece(Square.At(0, 0), StartingPositionFactory.GetRandomPiece(Player.White));
-
-            board.GetPiece(Square.At(0, 0)).Should().NotBeNull();
-
-        }
     }
 }

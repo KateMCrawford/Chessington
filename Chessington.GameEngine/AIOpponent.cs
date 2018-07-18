@@ -23,6 +23,13 @@ namespace Chessington.GameEngine
                         foreach (var move in board.GetPiece(Square.At(i, j)).GetAvailableMoves(board))
                         {
                             movesList.Add(new Square[] { Square.At(i,j), move });
+
+                            if (board.ContainsOpposingPiece(Square.At(i, j), colour))
+                            {
+                                movesList.Add(new Square[] { Square.At(i, j), move });
+                                movesList.Add(new Square[] { Square.At(i, j), move });
+                                movesList.Add(new Square[] { Square.At(i, j), move });
+                            }
                         }
                     }
                 }
