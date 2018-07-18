@@ -31,5 +31,26 @@ namespace Chessington.GameEngine.Pieces
             board.MovePiece(currentSquare, newSquare);
             hasMoved = true;
         }
+
+        public IEnumerable<Square> GetMovesInDirection(Square currentSquare, Board board, int rowDirection, int colDirection)
+        {
+            var moves = new List<Square>();
+
+            int i = 1;
+            Square nextMove = new Square(currentSquare.Row + i * rowDirection, currentSquare.Col + i * colDirection);
+            while (i < GameSettings.BoardSize && (board.IsSquareEmpty(nextMove)))
+            {
+                moves.Add(nextMove);
+                i++;
+                nextMove = new Square(currentSquare.Row + i * rowDirection, currentSquare.Col + i * colDirection);
+            }
+
+            if (board.ContainsOpposingPiece(nextMove, Player))
+            {
+                moves.Add(nextMove);
+            }
+
+            return moves;
+        }
     }
 }
