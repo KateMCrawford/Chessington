@@ -21,14 +21,12 @@ namespace Chessington.UI.Converters
             throw new NotImplementedException();
         }
 
-        private static Random rnd = new Random();
+        private static readonly Random rnd = new Random();
         private Color randomColor()
         {
-            Byte[] b = new Byte[3];
+            byte[] b = new byte[3];
             rnd.NextBytes(b);
-            var squareColor = new Color();
-            squareColor = Color.FromRgb(b[0], b[1], b[2]);
-            return squareColor;
+            return Color.FromRgb(b[0], b[1], b[2]);
         }
     }
 }

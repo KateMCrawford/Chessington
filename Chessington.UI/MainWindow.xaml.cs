@@ -15,7 +15,7 @@ namespace Chessington.UI
             DataContext = new GameViewModel();
             
             var boardViewModel = new BoardViewModel();
-            StartingPositionFactory.Setup(boardViewModel.Board);
+            StartingPositionFactory.RandomSetup(boardViewModel.Board);
             BoardViewFactory.CreateBoardView(boardViewModel, GridContainer);
             
             boardViewModel.PiecesMoved();

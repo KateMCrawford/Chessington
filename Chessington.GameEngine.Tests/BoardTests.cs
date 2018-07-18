@@ -1,4 +1,5 @@
 ﻿using Chessington.GameEngine.Pieces;
+using Chessington.UI.Factories;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -180,6 +181,17 @@ namespace Chessington.GameEngine.Tests
             board.AddPiece(Square.At(5, 5), blackRook);
 
             whiteKing.GetAvailableMoves(board).Should().NotContain(Square.At(7, 6));
+        }
+
+        [Test]
+        public void GetRandomPieceTest()
+        {
+            var board = new Board();
+
+            board.AddPiece(Square.At(0, 0), StartingPositionFactory.GetRandomPiece(Player.White));
+
+            board.GetPiece(Square.At(0, 0)).Should().NotBeNull();
+
         }
     }
 }

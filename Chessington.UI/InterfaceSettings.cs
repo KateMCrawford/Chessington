@@ -12,5 +12,6 @@ namespace Chessington.UI
 
         public static readonly Color SelectedSquareColor = Colors.BlueViolet;
         public static readonly Color ValidMovementTargetColor = Colors.YellowGreen;
+        public static readonly Color AIMoveColor = Colors.Red;
     }
 }

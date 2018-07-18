@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using Chessington.GameEngine;
 using Chessington.GameEngine.Pieces;
@@ -9,7 +10,7 @@ using Chessington.UI.Notifications;
 
 namespace Chessington.UI.ViewModels
 {
-    public class BoardViewModel : IHandle<PieceSelected>, IHandle<SquareSelected>, IHandle<SelectionCleared>
+    public class BoardViewModel : IHandle<PieceSelected>, IHandle<SquareSelected>, IHandle<SelectionCleared>, IHandle<CurrentPlayerChanged>
     {
         private Piece currentPiece;
 
@@ -23,9 +24,24 @@ namespace Chessington.UI.ViewModels
         
         public Board Board { get; private set; }
 
+        public AIOpponent opponent = new AIOpponent();
+
         public void PiecesMoved()
         {
             ChessingtonServices.EventAggregator.Publish(new PiecesMoved(Board));
+        }
+
+        public void Handle(CurrentPlayerChanged message)
+        {
+            if (message.Player == opponent.colour)
+            {
+                var move = opponent.GetMove(Board);
+                if (move != null)
+                {
+                    Board.MovePiece(move[0], move[1]);
+                    ChessingtonServices.EventAggregator.Publish(new AIMoveUpdate(move[1]));
+                }
+            }
         }
 
         public void Handle(PieceSelected message)
@@ -70,9 +86,9 @@ namespace Chessington.UI.ViewModels
             ChessingtonServices.EventAggregator.Publish(new PieceTaken(piece));
         }
 
-        private static void BoardOnCurrentPlayerChanged(Player player)
+        private void BoardOnCurrentPlayerChanged(Player player)
         {
-            ChessingtonServices.EventAggregator.Publish(new CurrentPlayerChanged(player));
+            ChessingtonServices.EventAggregator.Publish(new CurrentPlayerChanged(player, Board));
         }
     }
 }

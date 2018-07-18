@@ -40,7 +40,7 @@ namespace Chessington.UI.Factories
         private static void CreateSquare(int row, int col, Panel grid)
         {
             var square = new Canvas { Width = InterfaceSettings.SquareSize, Height = InterfaceSettings.SquareSize};
-            BindingOperations.SetBinding(square, Canvas.BackgroundProperty, new Binding("Self") { Converter = new SquareToBackgroundBrushConverter() });
+            BindingOperations.SetBinding(square, Panel.BackgroundProperty, new Binding("Self") { Converter = new SquareToBackgroundBrushConverter() });
 
             grid.Children.Add(square);
             Grid.SetRow(square, row);

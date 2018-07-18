@@ -23,6 +23,9 @@ namespace Chessington.UI.Converters
 
             if (square.ValidMovementTarget)
                 return new SolidColorBrush(InterfaceSettings.ValidMovementTargetColor);
+            
+            if (square.AIMove)
+                return new SolidColorBrush(InterfaceSettings.AIMoveColor);
 
             return new SolidColorBrush(Colors.Transparent);
         }

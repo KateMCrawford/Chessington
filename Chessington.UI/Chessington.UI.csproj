@@ -54,6 +54,7 @@
     <Compile Include="Notifications\PlayerHasWon.cs" />
     <Compile Include="Notifications\CurrentPlayerChanged.cs" />
     <Compile Include="Notifications\PieceTaken.cs" />
+    <Compile Include="Notifications\AIMoveUpdate.cs" />
     <Compile Include="Notifications\SelectionCleared.cs" />
     <Compile Include="Notifications\SquareSelected.cs" />
     <Compile Include="ViewModels\BoardViewModel.cs" />

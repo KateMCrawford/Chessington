@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CastlingHelper.cs" />
+    <Compile Include="AIOpponent.cs" />
     <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="GameSettings.cs" />

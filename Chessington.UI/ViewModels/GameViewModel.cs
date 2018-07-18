@@ -13,7 +13,7 @@ using Chessington.UI.Properties;
 namespace Chessington.UI.ViewModels
 {
     public class GameViewModel : INotifyPropertyChanged, IHandle<PieceTaken>,
-        IHandle<CurrentPlayerChanged>, IHandle<PiecesMoved>, IHandle<PlayerHasWon>, IHandle<Stalemate>
+        IHandle<CurrentPlayerChanged>, IHandle<PlayerHasWon>, IHandle<Stalemate>
     {
         private string currentPlayer;
 
@@ -45,10 +45,7 @@ namespace Chessington.UI.ViewModels
         public void Handle(CurrentPlayerChanged message)
         {
             CurrentPlayer = Enum.GetName(typeof(Player), message.Player);
-        }
 
-        public void Handle(PiecesMoved message)
-        {
             Player player = message.Board.CurrentPlayer;
             Player otherPlayer = player.opposingPlayer();
             if (message.Board.PlayerHasNoMoves(otherPlayer))

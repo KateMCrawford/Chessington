@@ -13,13 +13,15 @@ namespace Chessington.UI.ViewModels
     public class SquareViewModel : INotifyPropertyChanged, 
         IHandle<PiecesMoved>, 
         IHandle<PieceSelected>, 
-        IHandle<ValidMovesUpdated>, 
-        IHandle<SelectionCleared>
+        IHandle<ValidMovesUpdated>,
+        IHandle<SelectionCleared>,
+        IHandle<AIMoveUpdate>
     {
         private readonly Square square;
 
         private bool selected;
         private bool validMovementTarget;
+        private bool aiMove;
         private BitmapImage image;
 
         public SquareViewModel(Square square)
@@ -50,6 +52,17 @@ namespace Chessington.UI.ViewModels
             {
                 if (value.Equals(validMovementTarget)) return;
                 validMovementTarget = value;
+                OnPropertyChanged();
+                OnPropertyChanged("Self");
+            }
+        }
+        public bool AIMove
+        {
+            get { return aiMove; }
+            set
+            {
+                if (value.Equals(aiMove)) return;
+                aiMove = value;
                 OnPropertyChanged();
                 OnPropertyChanged("Self");
             }
@@ -94,6 +107,14 @@ namespace Chessington.UI.ViewModels
         {
             Selected = false;
             ValidMovementTarget = false;
+        }
+
+        public void Handle(AIMoveUpdate message)
+        {
+            if (message.Square != null)
+            {
+                AIMove = message.Square.Equals(square);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
